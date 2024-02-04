@@ -10,6 +10,6 @@ namespace api.Services.Auth
     public interface IAuthenticateService
     {
         public AuthenticateDto Register(RegisterRequest registerRequest);
-        public AuthenticateDto Login(LoginRequest loginRequest);
+        public AuthenticateDto? Login(LoginRequest loginRequest);
     }
 }

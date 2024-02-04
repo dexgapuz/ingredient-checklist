@@ -28,5 +28,25 @@ namespace api.Controllers
 
             return Ok(data);
         }
+
+        [HttpPost("login")]
+        public ActionResult<AuthenticateDto> Login([FromBody] LoginRequest loginRequest)
+        {
+            var data = _authService.Login(loginRequest);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (data == null)
+            {
+                ModelState.AddModelError("message", "Invalid Username and Password");
+
+                return BadRequest(ModelState);
+            }
+
+            return Ok(data);
+        }
     }
 }

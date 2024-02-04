@@ -9,12 +9,9 @@ namespace api.Request
     public class LoginRequest
     {
         [Required]
-        [MinLength(6)]
-        [MaxLength(12)]
         public string Username { get; set; } = string.Empty;
 
         [Required]
-        [MinLength(8)]
-        public string Password = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }

@@ -20,9 +20,25 @@ namespace api.Services.Auth
             _configuration = configuration;
         }
 
-        public AuthenticateDto Login(LoginRequest loginRequest)
+        public AuthenticateDto? Login(LoginRequest loginRequest)
         {
-            throw new NotImplementedException();
+            var user = _dataContext.Users
+                .Where(u => u.Username.ToLower() == loginRequest.Username.ToLower())
+                .FirstOrDefault();
+
+            if (user != null && BC.Verify(loginRequest.Password, user.Password))
+            {
+                return new AuthenticateDto
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    AccessToken = GenerateToken(user)
+                };
+            }
+
+            return null;
         }
 
         public AuthenticateDto Register(RegisterRequest registerRequest)
